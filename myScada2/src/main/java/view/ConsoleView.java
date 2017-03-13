@@ -18,7 +18,12 @@ public class ConsoleView implements View{
     public void run() {
         while (true){
             String cmd = scanner.nextLine();
-            /// TODO: 12.03.2017  
+
+            switch (cmd){
+                case "start" : controller.start();
+                case "stop" : controller.start();
+                case "exit" : controller.exit();
+            }
             
         }
     }

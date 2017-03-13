@@ -16,7 +16,7 @@
 
 
     <!--Setups-->
-    <bean id = "connectorSerup" class="connectors.ConnectorSetup">
+    <bean id = "connectorSetup" class="connectors.ConnectorSetup">
         <property name="port" value="502"/>
         <property name="parser" value="ModbusTcp"/>
     </bean>

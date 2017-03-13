@@ -23,8 +23,17 @@ public class Message {
         return status;
     }
 
+    @Override
+    public String toString() {
+        return "Message{" +
+                "status=" + status.name() +
+                '}';
+    }
+
     public Message setStatus(MessageTypes status) {
         this.status = status;
         return this;
+
+
     }
 }
