@@ -1,7 +1,9 @@
 package connectors;
 
 import entity.Message;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import parser.MessageParseExec;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -15,14 +17,16 @@ abstract class BaseConnector implements Connector {
     protected volatile AtomicBoolean run   = new AtomicBoolean();
     protected volatile AtomicBoolean event   = new AtomicBoolean();
     protected Message eventMsg;
+    @Autowired
+    protected MessageParseExec parser;
 
-    @Value("#{con.portClosed}")
+    @Value("portClosed")
     protected String portClosed;
-    @Value("#{con.portOpen}")
+    @Value("portOpened")
     protected String portOpened;
-    @Value("#{con.connected}")
+    @Value("connected")
     protected String connected;
-    @Value("#{con.error}")
+    @Value("error")
     protected String error;
 
     public void eventWrite(Message message) {

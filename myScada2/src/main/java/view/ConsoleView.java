@@ -20,9 +20,18 @@ public class ConsoleView implements View{
             String cmd = scanner.nextLine();
 
             switch (cmd){
-                case "start" : controller.start();
-                case "stop" : controller.start();
-                case "exit" : controller.exit();
+                case "start" :{
+                    controller.start();
+                    break;
+                }
+                case "stop" :{
+                    controller.start();
+                    break;
+                }
+                case "exit" :{
+                    controller.exit();
+                    return;
+                }
             }
             
         }

@@ -13,12 +13,31 @@
 
     <!--Beans-->
     <bean id ="reg" class="entity.Register"/>
+    <bean id="consoleView" class="view.ConsoleView"/>
+    <bean id="controller" class="Controller.MainController"/>
+    <bean id="tcpServerConnector" class="connectors.TcpServerConnector"/>
+
+
+    <bean id="messageParseExec" class="parser.MessageParseExec">
+        <constructor-arg name="commandMap" >
+            <map>
+                <entry key="rawData">
+                    <bean class="parser.parsers.RawData"/>
+                </entry>
+                <entry key="modbusSlaveTcp">
+                    <bean class="parser.parsers.ModbusSlaveTcp"/>
+                </entry>
+            </map>
+        </constructor-arg>
+    </bean>
+
+
 
 
     <!--Setups-->
     <bean id = "connectorSetup" class="connectors.ConnectorSetup">
         <property name="port" value="502"/>
-        <property name="parser" value="ModbusTcp"/>
+        <property name="parser" value="rawData"/>
     </bean>
 
 

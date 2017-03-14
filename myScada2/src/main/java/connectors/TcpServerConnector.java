@@ -98,7 +98,8 @@ public class TcpServerConnector extends BaseConnector {
                     break;
                 }
                 else {
-                    Message outMsg = MessageParseExec.execute(setup.getParser(), inMsg);
+                    print("in " + inMsg.toString());
+                    Message outMsg = parser.execute(setup.getParser(), inMsg);
                     if (outMsg.getStatus() != NOANSWER)
                         write(outMsg);
                     print(outMsg.toString());

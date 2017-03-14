@@ -1,18 +1,20 @@
 package connectors;
 
+import types.ProtocolTypes;
+
 /**
  * Created by U7 on 12.03.2017.
  */
 
 public class ConnectorSetup {
     private int port;
-    private String parser;
+    private ProtocolTypes parser;
 
-    public String getParser() {
+    public ProtocolTypes getParser() {
         return parser;
     }
 
-    public void setParser(String parser) {
+    public void setParser(ProtocolTypes parser) {
         this.parser = parser;
     }
 
