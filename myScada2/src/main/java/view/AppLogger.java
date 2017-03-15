@@ -10,14 +10,18 @@ public class AppLogger {
 
 
     public static void print(String text){
+        System.out.println(text);
         logger.info(text);
     }
 
     public static void print(String text,Throwable ex){
+        System.out.println(text);
+        ex.printStackTrace();
         logger.error(text,ex);
     }
 
     public static void printWarn(String text){
+        System.out.println(text);
         logger.warn(text);
     }
 

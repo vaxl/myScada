@@ -12,7 +12,8 @@ public class MainController implements Controller  {
 
     @Override
     public void start() {
-        connect.run();
+        Thread thread = new Thread(connect);
+        thread.start();
     }
 
     @Override

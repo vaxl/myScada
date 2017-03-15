@@ -3,6 +3,8 @@ package entity;
 
 import types.MessageTypes;
 
+import java.util.Arrays;
+
 /**
  * Created by U7 on 12.03.2017.
  */
@@ -25,8 +27,10 @@ public class Message {
 
     @Override
     public String toString() {
+        String rawStr="empty";
+        if(raw!=null)  rawStr = Arrays.toString(raw);
         return "Message{" +
-                "status=" + status.name() +
+                "status = " + status.name() + " raw = " + rawStr+
                 '}';
     }
 
