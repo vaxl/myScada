@@ -25,7 +25,7 @@ public class ConsoleView implements View{
                     break;
                 }
                 case "stop" :{
-                    controller.start();
+                    controller.stop();
                     break;
                 }
                 case "exit" :{

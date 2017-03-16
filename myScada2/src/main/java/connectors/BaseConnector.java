@@ -37,6 +37,5 @@ abstract class BaseConnector implements Connector {
     public void stop() {
         run.set(false);
         close();
-        print(portClosed);
     }
 }

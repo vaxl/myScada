@@ -73,11 +73,10 @@ public class TcpServerConnector extends BaseConnector {
 
     public void close() {
         try {
-            if (serverSocket!=null) serverSocket.close();
+            if (serverSocket!=null & !serverSocket.isClosed()) serverSocket.close();
             if (socket!=null ) {
-                in.close();
-                out.close();
                 socket.close();
+                print(portClosed);
             }
         } catch (IOException e) {print(error,e);}
     }
@@ -88,23 +87,25 @@ public class TcpServerConnector extends BaseConnector {
             while (run.get()) {
                 Message inMsg = read();
                 if (inMsg.getStatus() == NOTHING) {
-                    if (run.get() | !event.get()) {
+                    if (run.get() & !event.get()) {
                         print(error);
                         stop();
-                    } else {
+                        break;
+                    } else if (event.get()){
                         write(eventMsg);
                         event.set(false);
                     }
-                    break;
                 }
                 else {
                     print("in " + inMsg.toString());
                     Message outMsg = parser.execute(setup.getParser(), inMsg);
-                    if (outMsg.getStatus() != NOANSWER)
+                    if (outMsg.getStatus() != NOANSWER) {
                         write(outMsg);
-                    print(outMsg.toString());
+                        print(outMsg.toString());
+                    }
                 }
             }
+            print(Thread.currentThread().getName() + " stoped");
         }
     }
 }
