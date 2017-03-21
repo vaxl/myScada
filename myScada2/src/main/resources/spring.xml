@@ -9,7 +9,10 @@
 
 
     <context:annotation-config/>
-    <util:properties id="props" location="props.properties"/>
+
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location" value="props.properties"/>
+    </bean>
 
     <!--Beans-->
     <bean id ="reg" class="entity.Register"/>
@@ -17,6 +20,11 @@
     <bean id="controller" class="Controller.MainController"/>
     <bean id="tcpServerConnector" class="connectors.TcpServerConnector"/>
 
+    <bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+        <property name="corePoolSize" value="5" />
+        <property name="maxPoolSize" value="20" />
+        <property name="queueCapacity" value="5" />
+    </bean>
 
     <bean id="messageParseExec" class="parser.MessageParseExec">
         <constructor-arg name="commandMap" >
@@ -31,13 +39,11 @@
         </constructor-arg>
     </bean>
 
-
-
-
     <!--Setups-->
     <bean id = "connectorSetup" class="connectors.ConnectorSetup">
         <property name="port" value="502"/>
         <property name="parser" value="rawData"/>
+        <property name="name" value="no name"/>
     </bean>
 
 

@@ -14,4 +14,5 @@ public interface Connector extends Runnable {
     void close();
     void stop();
     void eventWrite(Message message);
+    String getName();
 }

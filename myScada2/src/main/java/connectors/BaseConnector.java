@@ -4,10 +4,8 @@ import entity.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import parser.MessageParseExec;
-
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import static view.AppLogger.print;
 
 /**
  * Created by U7 on 12.03.2017.
@@ -19,15 +17,24 @@ abstract class BaseConnector implements Connector {
     protected Message eventMsg;
     @Autowired
     protected MessageParseExec parser;
+    @Autowired
+    protected ConnectorSetup setup;
 
-    @Value("portClosed")
+    @Value("${portClosed}")
     protected String portClosed;
-    @Value("portOpened")
+    @Value("${portOpened}")
     protected String portOpened;
-    @Value("connected")
+    @Value("${connected}")
     protected String connected;
-    @Value("error")
+    @Value("${error}")
     protected String error;
+    @Value("${noConnection}")
+    protected String noConnection;
+
+
+    public String getName(){
+        return setup.getName();
+    }
 
     public void eventWrite(Message message) {
         event.set(true);
@@ -37,5 +44,10 @@ abstract class BaseConnector implements Connector {
     public void stop() {
         run.set(false);
         close();
+    }
+
+    @Override
+    public String toString() {
+        return "Connector{ "+ this.getClass().getSimpleName() +" name = " + getName() +" }";
     }
 }

@@ -1,5 +1,7 @@
 package connectors;
 
+import Controller.MainController;
+import org.springframework.beans.factory.annotation.Autowired;
 import types.ProtocolTypes;
 
 /**
@@ -9,6 +11,15 @@ import types.ProtocolTypes;
 public class ConnectorSetup {
     private int port;
     private ProtocolTypes parser;
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public ProtocolTypes getParser() {
         return parser;

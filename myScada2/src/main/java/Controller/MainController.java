@@ -23,6 +23,6 @@ public class MainController implements Controller  {
 
     @Override
     public void exit() {
-        connect.stop();
+        if(connect.isAlive()) connect.stop();
     }
 }

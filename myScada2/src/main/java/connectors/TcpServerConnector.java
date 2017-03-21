@@ -2,8 +2,6 @@ package connectors;
 
 import entity.Message;
 import org.springframework.beans.factory.annotation.Autowired;
-import parser.MessageParseExec;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -22,8 +20,7 @@ public class TcpServerConnector extends BaseConnector {
     private Socket socket;
     private InputStream in;
     private OutputStream out;
-    @Autowired
-    private ConnectorSetup setup;
+
 
 
     public Message read() {
@@ -54,7 +51,7 @@ public class TcpServerConnector extends BaseConnector {
             in = socket.getInputStream();
             out = socket.getOutputStream();
             return true;
-        }catch (Exception e) {print(error,e); return false;}
+        }catch (Exception e) {print(noConnection); return false;}
     }
 
 
@@ -105,7 +102,7 @@ public class TcpServerConnector extends BaseConnector {
                     }
                 }
             }
-            print(Thread.currentThread().getName() + " stoped");
+            print(Thread.currentThread().getName() + " stopped"); //// TODO: 21.03.2017
         }
     }
 }
