@@ -1,7 +1,5 @@
 package connectors;
 
-import Controller.MainController;
-import org.springframework.beans.factory.annotation.Autowired;
 import types.ProtocolTypes;
 
 /**

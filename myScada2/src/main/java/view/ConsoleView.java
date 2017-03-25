@@ -1,39 +1,64 @@
 package view;
 
-import Controller.Controller;
+import connectors.Connector;
+import controller.MainController;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Scanner;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Created by U7 on 12.03.2017.
  */
+@Service("consoleView")
 public class ConsoleView implements View{
     @Autowired
-    private Controller controller;
-    private static final Scanner scanner = new Scanner(System.in);
+    private MainController controller;
+    @Autowired
+    private Connector connect;
 
+    private static final Scanner scanner = new Scanner(System.in);
+    private volatile AtomicBoolean run = new AtomicBoolean();
 
     @Override
     public void run() {
-        while (true){
+        run.set(true);
+        while (run.get()){
             String cmd = scanner.nextLine();
+            String[] cmdParameters = cmd.split(" ");
+            if(cmdParameters.length<1) break;
 
-            switch (cmd){
+            switch (cmdParameters[0]){
                 case "start" :{
-                    controller.start();
+                    controller.start(connect);
                     break;
                 }
                 case "stop" :{
-                    controller.stop();
+                    if(cmdParameters.length<2) controller.stop("noName");
+                    else controller.stop(cmdParameters[1]);
                     break;
                 }
                 case "exit" :{
                     controller.exit();
-                    return;
+                    break;
+                }
+                case "info" : {
+                    controller.info();
+                    break;
                 }
             }
             
         }
+    }
+
+    @Override
+    public void stop() {
+        run.set(false);
+    }
+
+    @Override
+    public String getName() {
+        return this.getClass().getSimpleName();
     }
 }

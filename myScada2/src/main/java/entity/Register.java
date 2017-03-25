@@ -1,8 +1,9 @@
 package entity;
 
+import org.springframework.stereotype.Component;
 import types.ProtocolTypes;
 import types.RegTypes;
-
+@Component("register")
 public class Register implements Comparable<Register>{
     private ProtocolTypes protocol;
     private RegTypes type;

@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:util="http://www.springframework.org/schema/util"
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 
 
     <context:annotation-config/>
+
+    <context:component-scan base-package="model"/>
+    <context:component-scan base-package="controller"/>
+    <context:component-scan base-package="entity"/>
+    <context:component-scan base-package="view"/>
+    <context:component-scan base-package="connectors"/>
+
 
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="location" value="props.properties"/>
     </bean>
 
     <!--Beans-->
-    <bean id ="reg" class="entity.Register"/>
-    <bean id="consoleView" class="view.ConsoleView"/>
-    <bean id="controller" class="Controller.MainController"/>
-    <bean id="tcpServerConnector" class="connectors.TcpServerConnector"/>
 
     <bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
         <property name="corePoolSize" value="5" />
@@ -43,9 +44,7 @@
     <bean id = "connectorSetup" class="connectors.ConnectorSetup">
         <property name="port" value="502"/>
         <property name="parser" value="rawData"/>
-        <property name="name" value="no name"/>
+        <property name="name" value="noName"/>
     </bean>
-
-
 
 </beans>

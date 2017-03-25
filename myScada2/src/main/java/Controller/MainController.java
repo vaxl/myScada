@@ -1,28 +1,35 @@
-package Controller;
+package controller;
 
+import base.RunnableWithStop;
 import connectors.Connector;
+import model.ThreadManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by U7 on 13.03.2017.
  */
-public class MainController implements Controller  {
+@Component
+public class MainController  {
     @Autowired
-    private Connector connect;
+    private ThreadManager threadManager;
 
-    @Override
-    public void start() {
-        Thread thread = new Thread(connect);
-        thread.start();
+
+    public void start(RunnableWithStop thread) {
+        threadManager.startThread(thread);
     }
 
-    @Override
-    public void stop() {
-        connect.stop();
+
+    public void stop(String name) {
+        threadManager.stopThread(name);
     }
 
-    @Override
+
     public void exit() {
-        if(connect.isAlive()) connect.stop();
+        threadManager.stopAllThread();
+    }
+
+    public void info() {
+        threadManager.printAllActiveThreads();
     }
 }

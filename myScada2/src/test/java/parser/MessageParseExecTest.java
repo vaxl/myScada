@@ -10,8 +10,6 @@ import types.ProtocolTypes;
 
 import java.util.HashMap;
 
-import static org.junit.Assert.*;
-
 /**
  * Created by U7 on 13.03.2017.
  */
