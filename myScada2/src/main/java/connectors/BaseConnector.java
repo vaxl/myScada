@@ -8,13 +8,13 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 
 /**
- * Created by U7 on 12.03.2017.
+ * BaseConnector Created by U7 on 12.03.2017.
  */
 
 abstract class BaseConnector implements Connector {
-    protected volatile AtomicBoolean run   = new AtomicBoolean();
-    protected volatile AtomicBoolean event   = new AtomicBoolean();
-    protected Message eventMsg;
+    volatile AtomicBoolean run   = new AtomicBoolean();
+    volatile AtomicBoolean event   = new AtomicBoolean();
+    Message eventMsg;
     @Autowired
     protected MessageParseExec parser;
     @Autowired

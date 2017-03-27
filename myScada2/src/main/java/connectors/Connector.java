@@ -3,9 +3,7 @@ package connectors;
 import base.RunnableWithStop;
 import entity.Message;
 
-/**
- * Created by U7 on 12.03.2017.
- */
+
 public interface Connector extends RunnableWithStop {
     Message read();
     void write(Message message);

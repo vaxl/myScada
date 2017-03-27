@@ -104,7 +104,6 @@ public class TcpServerConnector extends BaseConnector {
                     }
                 }
             }
-            print(Thread.currentThread().getName() + " stopped"); //// TODO: 21.03.2017
         }
     }
 }

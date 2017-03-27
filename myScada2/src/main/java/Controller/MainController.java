@@ -1,7 +1,6 @@
 package controller;
 
 import base.RunnableWithStop;
-import connectors.Connector;
 import model.ThreadManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
