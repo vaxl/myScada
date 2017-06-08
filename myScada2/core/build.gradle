@@ -1,0 +1,9 @@
+apply plugin: "java"
+apply plugin: 'application'
+
+dependencies{
+    compile project(":library")
+    compile group: 'org.springframework', name: 'spring-context', version: project.springVersion
+    compile group: 'org.springframework', name: 'spring-core', version: project.springVersion
+    compile "log4j:log4j:1.2.17"
+}
