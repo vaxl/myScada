@@ -11,6 +11,18 @@ public class Message {
     private byte[] raw;
     private MessageTypes status;
 
+    public Message(byte[] raw, MessageTypes status) {
+        this.raw = raw;
+        this.status = status;
+    }
+
+    public Message(byte[] raw) {
+        this.raw = raw;
+    }
+
+    public Message() {
+    }
+
     public byte[] getRaw() {
         return raw;
     }

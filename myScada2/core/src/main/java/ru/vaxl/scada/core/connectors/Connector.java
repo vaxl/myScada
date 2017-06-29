@@ -1,10 +1,10 @@
 package ru.vaxl.scada.core.connectors;
 
-import ru.vaxl.scada.library.base.RunnableWithStop;
+import ru.vaxl.scada.library.base.Task;
 import ru.vaxl.scada.library.entity.Message;
 
 
-public interface Connector extends RunnableWithStop {
+public interface Connector extends Task {
     Message read();
     void write(Message message);
     void write(byte[] message);

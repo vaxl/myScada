@@ -1,9 +1,12 @@
 package ru.vaxl.scada.core.view;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import ru.vaxl.scada.core.connectors.Connector;
+import ru.vaxl.scada.core.connectors.NettyConnector;
 import ru.vaxl.scada.core.controller.MainController;
+import ru.vaxl.scada.library.base.Task;
 
 import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -16,7 +19,8 @@ public class ConsoleView implements View{
     @Autowired
     private MainController controller;
     @Autowired
-    private Connector connect;
+    @Qualifier("nettyConnector")
+    private Task NettyConnector;
 
     private static final Scanner scanner = new Scanner(System.in);
     private volatile AtomicBoolean run = new AtomicBoolean();
@@ -31,7 +35,8 @@ public class ConsoleView implements View{
 
             switch (cmdParameters[0]){
                 case "start" :{
-                    controller.start(connect);
+ //                   controller.start(connect);
+                    controller.start(NettyConnector);
                     break;
                 }
                 case "stop" :{

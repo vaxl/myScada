@@ -44,7 +44,9 @@
     <bean id = "connectorSetup" class="ru.vaxl.scada.core.connectors.ConnectorSetup">
         <property name="port" value="502"/>
         <property name="parser" value="rawData"/>
-        <property name="name" value="noName"/>
+        <property name="name" value="test"/>
+        <property name="priority" value="LOW"/>
+        <property name="channel" value="NIO"/>
     </bean>
 
 </beans>

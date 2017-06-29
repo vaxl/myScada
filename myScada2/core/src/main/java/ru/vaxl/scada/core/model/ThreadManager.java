@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 import ru.vaxl.scada.core.view.AppLogger;
-import ru.vaxl.scada.library.base.RunnableWithStop;
+import ru.vaxl.scada.library.base.Task;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,14 +16,14 @@ public class ThreadManager {
     private ThreadPoolTaskExecutor pool;
     @Value("${threadStart}")
     private String threadStart;
-    private Map<String,RunnableWithStop> activeThreads = new HashMap<>();
+    private Map<String,Task> activeThreads = new HashMap<>();
 
     @Autowired
     public void setPool(ThreadPoolTaskExecutor pool) {
         this.pool = pool;
     }
 
-    public synchronized void startThread(RunnableWithStop thread){
+    public synchronized void startThread(Task thread){
         AppLogger.print(threadStart + " " + thread.getName());
         pool.execute(thread);
         activeThreads.put(thread.getName(),thread);
@@ -38,7 +38,7 @@ public class ThreadManager {
     }
 
     public synchronized void stopThread(String name){
-        RunnableWithStop thread = activeThreads.get(name);
+        Task thread = activeThreads.get(name);
         if(thread==null) AppLogger.print(name + " not found thread");
             else{
             thread.stop();

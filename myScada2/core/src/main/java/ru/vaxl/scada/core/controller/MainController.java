@@ -3,7 +3,7 @@ package ru.vaxl.scada.core.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.vaxl.scada.core.model.ThreadManager;
-import ru.vaxl.scada.library.base.RunnableWithStop;
+import ru.vaxl.scada.library.base.Task;
 
 /**
  * Created by U7 on 13.03.2017.
@@ -14,7 +14,7 @@ public class MainController  {
     private ThreadManager threadManager;
 
 
-    public void start(RunnableWithStop thread) {
+    public void start(Task thread) {
         threadManager.startThread(thread);
     }
 

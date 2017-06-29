@@ -3,13 +3,11 @@ package ru.vaxl.scada.core.connectors;
 import org.springframework.stereotype.Component;
 import ru.vaxl.scada.core.view.AppLogger;
 import ru.vaxl.scada.library.entity.Message;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-
 import static ru.vaxl.scada.library.types.MessageTypes.*;
 
 
