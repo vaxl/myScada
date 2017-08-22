@@ -2,28 +2,41 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:cache="http://www.springframework.org/schema/cache"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd">
 
 
     <context:annotation-config/>
+    <cache:annotation-driven />
 
-    <context:component-scan base-package="ru.vaxl.scada.core.model"/>
-    <context:component-scan base-package="ru.vaxl.scada.core.controller"/>
+    <context:component-scan base-package="ru.vaxl.scada.core.manager"/>
     <context:component-scan base-package="ru.vaxl.scada.library.entity"/>
-    <context:component-scan base-package="ru.vaxl.scada.core.view"/>
+    <context:component-scan base-package="ru.vaxl.scada.core.messages"/>
     <context:component-scan base-package="ru.vaxl.scada.core.connectors"/>
+    <context:component-scan base-package="ru.vaxl.scada.core.config"/>
+    <context:component-scan base-package="ru.vaxl.scada.core.api"/>
 
+    <bean id="cacheManager" class="org.springframework.cache.caffeine.CaffeineCacheManager">
+        <property name="cacheNames">
+            <set>
+                <value>default</value>
+            </set>
+        </property>
+        <property name="caffeine" ref="caffeine"/>
+    </bean>
+
+    <bean id="caffeine" class="com.github.benmanes.caffeine.cache.Caffeine" factory-method="newBuilder"/>
 
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="location" value="props.properties"/>
+        <property name="location" value="classpath:props.properties"/>
     </bean>
 
     <!--Beans-->
 
     <bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
         <property name="corePoolSize" value="5" />
-        <property name="maxPoolSize" value="20" />
+        <property name="maxPoolSize" value="30" />
         <property name="queueCapacity" value="5" />
     </bean>
 

@@ -1,28 +1,31 @@
-package ru.vaxl.scada.core.view;
+package ru.vaxl.scada.core.messages;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Component;
+import ru.vaxl.scada.library.base.Msg;
 
 /**
  * Created by U7 on 12.03.2017.
  */
-public class AppLogger {
+@Component
+public class AppLogger implements Msg {
     private static Logger logger = Logger.getLogger("AppLogger");
 
 
-    public static void print(String text){
+    public void print(String text){
         logger.info(text);
     }
 
-    public static void printDebug(String text){
+    public void debug(String text){
         logger.debug(text);
     }
 
-    public static void print(String text,Throwable ex){
+    public void print(String text,Throwable ex){
         logger.error(text,ex);
     }
 
-    public static void printWarn(String text){
+    public void warn(String text){
         logger.warn(text);
     }
 

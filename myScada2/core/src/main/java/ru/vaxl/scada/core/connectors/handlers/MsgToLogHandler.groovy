@@ -3,9 +3,9 @@ package ru.vaxl.scada.core.connectors.handlers
 import io.netty.channel.ChannelHandlerContext
 import io.netty.channel.ChannelInboundHandlerAdapter
 
-import static ru.vaxl.scada.core.view.AppLogger.print
 
 /**
+ *
  * Created by U7 on 29.06.2017.
  */
 class MsgToLogHandler extends ChannelInboundHandlerAdapter {

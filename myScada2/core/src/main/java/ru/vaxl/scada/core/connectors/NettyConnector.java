@@ -12,16 +12,21 @@ import org.springframework.stereotype.Component;
 import ru.vaxl.scada.core.connectors.decoders.ByteArrayDecoder;
 import ru.vaxl.scada.core.connectors.handlers.MsgToLogHandler;
 import ru.vaxl.scada.core.connectors.handlers.ReverseHandler;
+import ru.vaxl.scada.library.base.Msg;
 import ru.vaxl.scada.library.base.Task;
-
-import static ru.vaxl.scada.core.view.AppLogger.print;
 
 @Component
 public  class NettyConnector  implements Task {
     private EventLoopGroup bossGroup;
     private EventLoopGroup workerGroup;
+    private final ConnectorSetup setup;
+    private final Msg msg;
+
     @Autowired
-    private ConnectorSetup setup;
+    public NettyConnector(ConnectorSetup setup, Msg msg) {
+        this.setup = setup;
+        this.msg = msg;
+    }
 
     private void init() {
         // Configure the server.
@@ -37,7 +42,7 @@ public  class NettyConnector  implements Task {
             Channel ch = b.bind(setup.getPort()).sync().channel();
             ch.closeFuture().sync();
         } catch (Exception e){
-            print("",e);
+            msg.print("",e);
         }
         finally {
             bossGroup.shutdownGracefully();

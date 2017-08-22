@@ -5,9 +5,8 @@ import io.netty.channel.ChannelInboundHandlerAdapter
 import ru.vaxl.scada.library.entity.Message
 import ru.vaxl.scada.library.types.MessageTypes
 
-import static ru.vaxl.scada.core.view.AppLogger.print
-
 /**
+ *
  * Created by U7 on 29.06.2017.
  */
 class ReverseHandler  extends ChannelInboundHandlerAdapter {

@@ -1,17 +1,20 @@
 package ru.vaxl.scada.core.connectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.vaxl.scada.core.view.AppLogger;
+import ru.vaxl.scada.library.base.Msg;
 import ru.vaxl.scada.library.entity.Message;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+
 import static ru.vaxl.scada.library.types.MessageTypes.*;
 
-
 /**
+ *
  * Created by U7 on 12.03.2017.
  */
 @Component("tcpServerConnector")
@@ -21,6 +24,12 @@ public class TcpServerConnector extends BaseConnector {
     private Socket socket;
     private InputStream in;
     private OutputStream out;
+    private final Msg msg;
+
+    @Autowired
+    public TcpServerConnector(Msg msg) {
+        this.msg = msg;
+    }
 
     public Message read() {
         try {
@@ -32,7 +41,7 @@ public class TcpServerConnector extends BaseConnector {
                     return new Message().setRaw(arr).setStatus(OK);
                 } else  Thread.sleep(10);
             }
-        } catch (Exception e) { AppLogger.print(error,e); stop();}
+        } catch (Exception e) { msg.print(error,e); stop();}
         return new Message().setStatus(NOTHING);
     }
 
@@ -44,14 +53,14 @@ public class TcpServerConnector extends BaseConnector {
     public boolean init() {
         try{
             serverSocket = new ServerSocket(setup.getPort());
-            AppLogger.print(portOpened);
+            msg.print(portOpened);
             socket = serverSocket.accept();
-            AppLogger.print(connected);
+            msg.print(connected);
             in = socket.getInputStream();
             out = socket.getOutputStream();
             return true;
         }catch (Exception e) {
-            AppLogger.print(noConnection); return false;}
+            msg.print(noConnection); return false;}
     }
 
 
@@ -65,7 +74,7 @@ public class TcpServerConnector extends BaseConnector {
             if(message!=null)
                 out.write(message);
         } catch (IOException e) {
-            AppLogger.print(error,e); stop();}
+            msg.print(error,e); stop();}
     }
 
 
@@ -74,10 +83,10 @@ public class TcpServerConnector extends BaseConnector {
             if (serverSocket!=null & !serverSocket.isClosed()) serverSocket.close();
             if (socket!=null ) {
                 socket.close();
-                AppLogger.print(portClosed);
+                msg.print(portClosed);
             }
         } catch (IOException e) {
-            AppLogger.print(error,e);}
+            msg.print(error,e);}
     }
 
     public void run() {
@@ -87,7 +96,7 @@ public class TcpServerConnector extends BaseConnector {
                 Message inMsg = read();
                 if (inMsg.getStatus() == NOTHING) {
                     if (run.get() & !event.get()) {
-                        AppLogger.print(error);
+                        msg.print(error);
                         stop();
                         break;
                     } else if (event.get()){
@@ -96,11 +105,11 @@ public class TcpServerConnector extends BaseConnector {
                     }
                 }
                 else {
-                    AppLogger.print("in " + inMsg.toString());
+                    msg.print("in " + inMsg.toString());
                     Message outMsg = parser.execute(setup.getParser(), inMsg);
                     if (outMsg.getStatus() != NOANSWER) {
                         write(outMsg);
-                        AppLogger.print(outMsg.toString());
+                        msg.print(outMsg.toString());
                     }
                 }
             }

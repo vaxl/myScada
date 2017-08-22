@@ -1,45 +1,49 @@
-package ru.vaxl.scada.core.model;
+package ru.vaxl.scada.core.manager;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
-import ru.vaxl.scada.core.view.AppLogger;
+import ru.vaxl.scada.core.messages.AppLogger;
+import ru.vaxl.scada.library.base.Msg;
 import ru.vaxl.scada.library.base.Task;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@Service("ThreadManager")
-public class ThreadManager {
+import static ru.vaxl.scada.library.Constants.TextCommon.*;
 
-    private ThreadPoolTaskExecutor pool;
+@Service("ThreadManager")
+public class TaskManager {
+
     @Value("${threadStart}")
     private String threadStart;
-    private Map<String,Task> activeThreads = new HashMap<>();
+    private final ThreadPoolTaskExecutor pool;
+    private final Msg msg;
+    private final Map<String,Task> activeThreads = new HashMap<>();
 
     @Autowired
-    public void setPool(ThreadPoolTaskExecutor pool) {
+    public TaskManager(ThreadPoolTaskExecutor pool, Msg msg) {
         this.pool = pool;
+        this.msg = msg;
     }
 
     public synchronized void startThread(Task thread){
-        AppLogger.print(threadStart + " " + thread.getName());
+        msg.print(threadStart + SPACE + thread.getName());
         pool.execute(thread);
         activeThreads.put(thread.getName(),thread);
     }
 
-
-    public  void printAllActiveThreads(){
+    public void printAllActiveThreads(){
         StringBuilder all = new StringBuilder();
-        all.append("Connectioms in pool = ").append(pool.getActiveCount()).append("\n");
-        activeThreads.forEach((k, v) -> all.append("Thread name = ").append(k).append("\n"));
-        AppLogger.print(all.toString());
+        all.append("Connections in pool = ").append(pool.getActiveCount()).append(NEW_LINE);
+        activeThreads.forEach((k, v) -> all.append("Thread name = ").append(k).append(NEW_LINE));
+        msg.print(all.toString());
     }
 
     public synchronized void stopThread(String name){
         Task thread = activeThreads.get(name);
-        if(thread==null) AppLogger.print(name + " not found thread");
+        if(thread==null) msg.print(name + " not found thread");
             else{
             thread.stop();
             activeThreads.remove(name);
